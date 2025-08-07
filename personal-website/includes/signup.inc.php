@@ -14,14 +14,15 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
         }
         if (ise_username_taken($username)) {
             $errors["username_taken"]="username has already been taken, please choose another one";
-        } if (!empty($errors)) {
-            
+        } if ($errors) {
+            $_SESSION["errors-signup"]=$errors;
+            header("Location: ./../html/createAccount.html");
         }
         require_once "dbh.inc.php";
         require_once "hashpassword.inc.php";
         $query="INSERT INTO users (username, pwd) VALUES (?, ?);";
 
-        //prevents SQL injection
+        //prepared statements prevent SQL injection
         $hashed_password=hash_password($password);
         var_dump($hashed_password);
         $statement=$pdo->prepare($query);
@@ -41,3 +42,4 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 } else {
     header("Location: ./../createAccount.html");
 }    
+

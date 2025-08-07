@@ -1,3 +1,6 @@
+<?php
+require_once './../includes/signup_viewer.inc.php';
+require_once './../includes/signup_viewer.php';
 <html>
     <head>
 
@@ -11,7 +14,7 @@
             <button>Sign up</button>
         </form>
         <?php 
-        check_if_errors()
+            check_if_signup_errors();
         ?>
     </body>
 </html>
